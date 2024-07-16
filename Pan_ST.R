@@ -69,5 +69,13 @@ All.markers %>%
   ungroup()-> top10.markers
 DoHeatmap(obj2, features = top10.markers$gene) + NoLegend()
 
+fwrite(All.markers,"/home/rstudio/Pan_gene.markers.csv")
+library(data.table)
+
+saveRDS(obj2,"/home/rstudio/PDAC_Seurat.rds")
+ 
 # Rename cell clusters
-obj2 = RenameIdents(obj2, '0'="Stellate",'1'="",'3'="",'4'="Ductal", '5'="Endothelial cells", '6'="Macrophage")
+obj2 = RenameIdents(obj2, '0'="Stellate",'1'="myeloid",'2'="Ductalcells", '3'="Bcells",'4'="Ductal", '5'="Endothelial cells", '6'="Tcells",'7'="Stellate",'8'="Plasma",'9'="Dendritic_cells",'10'="Mast_cells",'11'= "B cells",'12'="Plasma",'13'="Fibroblasts",'14'="B cells",'15'= "Monocytes",'16'="Stellate" )
+DimPlot(obj2, reduction = "UMAP", label = T)
+
+View(obj2@meta.data)
