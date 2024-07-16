@@ -1,10 +1,6 @@
 library(tidyverse)
 library(Seurat)
-pan_obj <- ReadNanostring(data.dir = "SMI_images/T1-b/",
-                          type = "centroids")
 
-obj = ReadNanostring(data.dir = "Lung9_Rep1/Lung9_Rep1-Flat_files_and_images/",
-                     type = "centroids")
 exp = fread("/home/rstudio/SMI_images/T1-b/T1-b_exprMat_file.csv") %>%
   mutate(row_name = paste0("pan_",fov,"_",cell_ID))%>%
   column_to_rownames("row_name")%>%
