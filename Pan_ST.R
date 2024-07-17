@@ -71,7 +71,20 @@ library(data.table)
 saveRDS(obj2,"/home/rstudio/PDAC_Seurat.rds")
  
 # Rename cell clusters
-obj2 = RenameIdents(obj2, '0'="Stellate",'1'="myeloid",'2'="Ductalcells", '3'="Bcells",'4'="Ductal", '5'="Endothelial cells", '6'="Tcells",'7'="Stellate",'8'="Plasma",'9'="Dendritic_cells",'10'="Mast_cells",'11'= "B cells",'12'="Plasma",'13'="Fibroblasts",'14'="B cells",'15'= "Monocytes",'16'="Stellate" )
+obj2 = RenameIdents(obj2, '0'= "Stromal cells", '1' = "Fibroblasts", '2'="Dendritic cells" , '3'="Ductal cells",'4'="Fibroblasts", '5'="Ductal cells", '6'="Tcells",'7'="Stromal cells",'8'="Endothelial cells",'9'="B cells",'10'="Fibroblasts",'11'= "Macrophages",'12'="B cells",'13'="Fibroblasts",'14'="B cells",'15'= "Monocytes",'16'="Stellate" )
 DimPlot(obj2, reduction = "UMAP", label = T)
 
 View(obj2@meta.data)
+
+metafile = cbind(rownames(obj2@meta.data), obj2@meta.data)
+
+### Define Output Folder and File Paths
+output_folder <- "/home/rstudio/"
+Project_Name <- "Pancreatic cancer"
+meta_file = paste(output_folder, Project_Name, "_meta.txt", sep="");
+write.table(metafile, file = meta_file, sep="\t",row.names = F)
+
+matrix_file = paste(output_folder, Project_Name, "exp.txt", sep="");
+
+### Write Data to Files
+write.table( obj2@assays$SCT$data, file = matrix_file, sep="\t", row.names = TRUE,col.names=NA)
